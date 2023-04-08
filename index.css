@@ -65,10 +65,11 @@ button {
     transition: all ease 0.5s;
 }
 
-button:hover {
-    background-color: rgb(146, 155, 255);
-}
-
 button:focus {
     border: 1px solid blue;
+    background-color: rgb(193, 198, 255);
+}
+
+button:hover {
+    background-color: rgb(146, 155, 255);
 }
