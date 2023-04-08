@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     generateSudoku()
 })
 
@@ -22,17 +22,77 @@ const getSudoku = () => {
 
 }
 
-const solveHuman = () => {
+const isHumanSolvable = () => {
 
     const sudokuMap = getSudoku()
 
-    for (var row = 0; row < 9; row++) {
+    var numOfChanges = 0
 
-        for (var i = 1; i <= 9; i++) {
+    do {
+
+        numOfChanges = 0
+
+        for (var row = 0; row < 9; row++) {
+
+            for (var col = 0; col < 9; col++) {
+
+                const posNum = getSinglePossibleNumber(row, col)
+
+                if (posNum !== 0) {
+                    numOfChanges++
+                    sudokuMap[row][col] = posNum
+                    setSudoku(sudokuMap, false)
+                }
+
+            }
 
         }
 
+    } while (numOfChanges > 0);
+
+    return isSudokuValid() && isSudokuFilled()
+}
+
+const isSudokuFilled = () => {
+    var solvable = true
+
+    getSudoku().forEach(e => e.forEach(i => {
+        if (i === 0)
+            solvable = false
+    }))
+
+    return solvable
+
+}
+
+const getSinglePossibleNumber = (r: number, c: number) => {
+
+    var sudokuMap = getSudoku()
+
+    if (sudokuMap[r][c] !== 0)
+        return 0
+
+    var posNumList = ''
+
+    for (var i = 1; i <= 9; i++) {
+
+        sudokuMap[r][c] = i
+        setSudoku(sudokuMap, false)
+
+        if (isFieldValid(r, c)) {
+            posNumList += i
+            continue
+        }
+
     }
+
+    sudokuMap[r][c] = 0
+    setSudoku(sudokuMap, false)
+
+    if (posNumList.length == 1)
+        return +posNumList
+
+    return 0
 
 }
 
@@ -90,6 +150,8 @@ const setSudoku = (sudokuMap: Array<Array<number>>, disableFilled: boolean) => {
                 (row?.querySelector(`#field${i + 1}`)?.querySelector('.fieldInput') as HTMLInputElement).disabled = true
         }
     }
+
+    return sudokuMap
 }
 
 const isFieldValid = (r: number, c: number) => {
@@ -202,15 +264,24 @@ const generateSudoku = () => {
     document.querySelectorAll('.fieldInput')?.forEach(e => (e as HTMLInputElement).disabled = false)
     setSudoku(sudokuMap, false)
 
-
     solveBacktracking()
 
     sudokuMap = getSudoku()
 
     for (var r = 0; r < 9; r++) {
         for (var c = 0; c < 9; c++) {
+            var before = sudokuMap[r][c]
             if (Math.random() >= 0.4) {
                 sudokuMap[r][c] = 0
+
+                var sudoku = setSudoku(sudokuMap, false)
+
+                if (!isHumanSolvable()) {
+                    sudokuMap[r][c] = before
+                }
+
+                setSudoku(sudoku, false)
+
             }
         }
     }
