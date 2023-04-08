@@ -1,3 +1,6 @@
+document.addEventListener("DOMContentLoaded", function () {
+    generateSudoku();
+});
 var getSudoku = function () {
     var _a, _b;
     var sudokuMap;
@@ -46,13 +49,13 @@ var solvesolveBacktrackingForRC = function (r, c) {
     return false;
 };
 var setSudoku = function (sudokuMap, disableFilled) {
-    var _a, _b, _c, _d;
+    var _a, _b;
     for (var r = 0; r < 9; r++) {
         var row = document.querySelector("#row".concat(r + 1));
         for (var i = 0; i < 9; i++) {
-            (_b = (_a = row === null || row === void 0 ? void 0 : row.querySelector("#field".concat(i + 1))) === null || _a === void 0 ? void 0 : _a.querySelector('.fieldInput')) === null || _b === void 0 ? void 0 : _b.setAttribute('value', sudokuMap[r][i] > 0 ? sudokuMap[r][i].toString() : '');
+            ((_a = row === null || row === void 0 ? void 0 : row.querySelector("#field".concat(i + 1))) === null || _a === void 0 ? void 0 : _a.querySelector('.fieldInput')).value = sudokuMap[r][i] > 0 ? sudokuMap[r][i].toString() : '';
             if (sudokuMap[r][i] > 0 && disableFilled)
-                (_d = (_c = row === null || row === void 0 ? void 0 : row.querySelector("#field".concat(i + 1))) === null || _c === void 0 ? void 0 : _c.querySelector('.fieldInput')) === null || _d === void 0 ? void 0 : _d.setAttribute('disabled', '');
+                ((_b = row === null || row === void 0 ? void 0 : row.querySelector("#field".concat(i + 1))) === null || _b === void 0 ? void 0 : _b.querySelector('.fieldInput')).disabled = true;
         }
     }
 };
@@ -104,19 +107,30 @@ var isCellValid = function (r, c) {
     }
     return true;
 };
+var clearSudoku = function () {
+    var _a;
+    var sudokuMap;
+    sudokuMap = new Array();
+    for (var i = 0; i < 9; i++)
+        sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    (_a = document.querySelectorAll('.fieldInput')) === null || _a === void 0 ? void 0 : _a.forEach(function (e) { return e.disabled = false; });
+    setSudoku(sudokuMap, false);
+};
 var generateSudoku = function () {
+    var _a;
     var sudokuMap;
     sudokuMap = new Array();
     var ran = function () { return Math.ceil(Math.random() * 9); };
     sudokuMap.push([ran(), 0, 0, 0, 0, 0, 0, 0, 0]);
     sudokuMap.push([0, 0, 0, ran(), 0, 0, 0, 0, 0]);
     sudokuMap.push([0, 0, 0, 0, 0, 0, ran(), 0, 0]);
-    sudokuMap.push([0, ran(), 0, 0, 0, 0, 0, 0, 0]);
-    sudokuMap.push([0, 0, 0, 0, ran(), 0, 0, 0, 0]);
-    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, ran(), 0]);
-    sudokuMap.push([0, 0, ran(), 0, 0, 0, 0, 0, 0]);
-    sudokuMap.push([0, 0, 0, 0, 0, ran(), 0, 0, 0]);
-    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, ran()]);
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    (_a = document.querySelectorAll('.fieldInput')) === null || _a === void 0 ? void 0 : _a.forEach(function (e) { return e.disabled = false; });
     setSudoku(sudokuMap, false);
     solveBacktracking();
     sudokuMap = getSudoku();
@@ -128,14 +142,14 @@ var generateSudoku = function () {
         }
     }
     setSudoku(sudokuMap, true);
-    document.querySelectorAll('.fieldInput').forEach(function (e) { return e.onchange = function (ev) {
+    document.querySelectorAll('.fieldInput').forEach(function (e) { return e.oninput = function (ev) {
         var field = e.parentElement;
         var row = field === null || field === void 0 ? void 0 : field.parentElement;
         var r = row === null || row === void 0 ? void 0 : row.id.replace('row', '');
         var c = field === null || field === void 0 ? void 0 : field.id.replace('field', '');
         if (!isFieldValid(parseInt(r) - 1, parseInt(c) - 1)) {
             console.log({ r: r, c: c });
-            e.style.backgroundColor = 'red';
+            e.style.backgroundColor = 'rgb(255, 101, 101)';
         }
         else
             e.style.backgroundColor = 'white';

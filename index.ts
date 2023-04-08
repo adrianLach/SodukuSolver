@@ -1,3 +1,6 @@
+document.addEventListener("DOMContentLoaded", function () {
+    generateSudoku()
+});
 
 const getSudoku = () => {
 
@@ -82,9 +85,9 @@ const setSudoku = (sudokuMap: Array<Array<number>>, disableFilled: boolean) => {
         const row = document.querySelector(`#row${r + 1}`)
 
         for (let i = 0; i < 9; i++) {
-            row?.querySelector(`#field${i + 1}`)?.querySelector('.fieldInput')?.setAttribute('value', sudokuMap[r][i] > 0 ? sudokuMap[r][i].toString() : '')
+            (row?.querySelector(`#field${i + 1}`)?.querySelector('.fieldInput') as HTMLInputElement).value = sudokuMap[r][i] > 0 ? sudokuMap[r][i].toString() : ''
             if (sudokuMap[r][i] > 0 && disableFilled)
-                row?.querySelector(`#field${i + 1}`)?.querySelector('.fieldInput')?.setAttribute('disabled', '')
+                (row?.querySelector(`#field${i + 1}`)?.querySelector('.fieldInput') as HTMLInputElement).disabled = true
         }
     }
 }
@@ -167,6 +170,18 @@ const isCellValid = (r: number, c: number) => {
 
 }
 
+const clearSudoku = () => {
+
+    var sudokuMap: Array<Array<number>>
+    sudokuMap = new Array()
+
+    for (var i = 0; i < 9; i++)
+        sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+    document.querySelectorAll('.fieldInput')?.forEach(e => (e as HTMLInputElement).disabled = false)
+    setSudoku(sudokuMap, false)
+}
+
 const generateSudoku = () => {
 
     var sudokuMap: Array<Array<number>>
@@ -177,14 +192,16 @@ const generateSudoku = () => {
     sudokuMap.push([ran(), 0, 0, 0, 0, 0, 0, 0, 0])
     sudokuMap.push([0, 0, 0, ran(), 0, 0, 0, 0, 0])
     sudokuMap.push([0, 0, 0, 0, 0, 0, ran(), 0, 0])
-    sudokuMap.push([0, ran(), 0, 0, 0, 0, 0, 0, 0])
-    sudokuMap.push([0, 0, 0, 0, ran(), 0, 0, 0, 0])
-    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, ran(), 0])
-    sudokuMap.push([0, 0, ran(), 0, 0, 0, 0, 0, 0])
-    sudokuMap.push([0, 0, 0, 0, 0, ran(), 0, 0, 0])
-    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, ran()])
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
+    sudokuMap.push([0, 0, 0, 0, 0, 0, 0, 0, 0])
 
+    document.querySelectorAll('.fieldInput')?.forEach(e => (e as HTMLInputElement).disabled = false)
     setSudoku(sudokuMap, false)
+
 
     solveBacktracking()
 
@@ -200,7 +217,7 @@ const generateSudoku = () => {
 
     setSudoku(sudokuMap, true)
 
-    document.querySelectorAll<HTMLElement>('.fieldInput').forEach(e => (e as HTMLInputElement).onchange = (ev) => {
+    document.querySelectorAll<HTMLElement>('.fieldInput').forEach(e => (e as HTMLInputElement).oninput = (ev) => {
         const field = e.parentElement
         const row = field?.parentElement
 
@@ -209,7 +226,7 @@ const generateSudoku = () => {
 
         if (!isFieldValid(parseInt(r!) - 1, parseInt(c!) - 1)) {
             console.log({ r, c })
-            e.style.backgroundColor = 'red'
+            e.style.backgroundColor = 'rgb(255, 101, 101)'
         } else e.style.backgroundColor = 'white'
 
     })
