@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     generateSudoku()
-});
+})
 
 const getSudoku = () => {
 
@@ -223,6 +223,10 @@ const generateSudoku = () => {
 
         const r = row?.id.replace('row', '')
         const c = field?.id.replace('field', '')
+
+        if (+(e as HTMLInputElement).value < 1 || +(e as HTMLInputElement).value > 9) {
+            (e as HTMLInputElement).value = ''
+        }
 
         if (!isFieldValid(parseInt(r!) - 1, parseInt(c!) - 1)) {
             console.log({ r, c })

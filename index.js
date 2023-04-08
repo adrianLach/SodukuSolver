@@ -147,6 +147,9 @@ var generateSudoku = function () {
         var row = field === null || field === void 0 ? void 0 : field.parentElement;
         var r = row === null || row === void 0 ? void 0 : row.id.replace('row', '');
         var c = field === null || field === void 0 ? void 0 : field.id.replace('field', '');
+        if (+e.value < 1 || +e.value > 9) {
+            e.value = '';
+        }
         if (!isFieldValid(parseInt(r) - 1, parseInt(c) - 1)) {
             console.log({ r: r, c: c });
             e.style.backgroundColor = 'rgb(255, 101, 101)';
