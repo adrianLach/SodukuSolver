@@ -1,4 +1,4 @@
-### Sudoku Solver
+# Sudoku Solver
 
 ## Start
 
@@ -8,13 +8,13 @@ Open index.html
 
 ## Edit
 
-# Install dependencies
+### Install dependencies
 ```npm install```
 
-# Install Typescript
+### Install Typescript
 ```npm install -g typescript```
 
-# Run Typescipt
+### Run Typescipt
 ```tsc index.ts -w```
 
 Start editing index.ts
