@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
+    <title>Sudoku Solver</title>
+</head>
+
+<body>
+    <button id="generate" onclick="generateSudoku()">Generate</button>
+    <button onclick="solveBacktracking()">Solve BT</button>
+    <div class="centered">
+        <div>
+            <div id="row1" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+            <div id="row2" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+            <div id="row3" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+            <div id="row4" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+            <div id="row5" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+            <div id="row6" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+            <div id="row7" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+            <div id="row8" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+            <div id="row9" class="row">
+                <div id="field1" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field2" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field3" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field4" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field5" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field6" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field7" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field8" class="field"><input class="fieldInput" type="number"></div>
+                <div id="field9" class="field"><input class="fieldInput" type="number"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
